@@ -8,17 +8,22 @@ import java.sql.SQLException;
 
 public class Insert {
     private static final Logger logger = LoggerFactory.getLogger(Insert.class);
+
     public static void add(int id,String n,String a,String d){
         String sql = "Insert into emp values(?,?,?,?)";
         try {
-
             PreparedStatement preparedStatement = DbCon.connection.prepareStatement(sql);
             preparedStatement.setInt(1,id);
             preparedStatement.setString(2,n);
             preparedStatement.setString(3,a);
             preparedStatement.setString(4,d);
-            preparedStatement.execute();
-            logger.info("Data Inserted Successfully....!");
+            int c=preparedStatement.executeUpdate();
+            if(c!=0){
+                logger.info("Data Inserted Successfully....!");
+            }else{
+                logger.info("Data Not Inserted");
+            }
+
         } catch (SQLException e) {
             logger.error("error is "+e);
         }
