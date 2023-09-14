@@ -11,19 +11,32 @@ public class Read {
     private static final Logger logger = LoggerFactory.getLogger(Read.class);
 
     public static void dis(){
-        logger.info("Print all details");
+
         String query = "select * from emp";
+        String query1 = "select * from emp";
+
 
         try {
+
             Statement stmt = DbCon.connection.createStatement();
-            ResultSet result=stmt.executeQuery(query);
-            logger.info("EmpId\tEmpName\tAddress\tDepartment");
-            while(result.next()){
-                logger.info(result.getInt(1)+"\t"
-                        +result.getString(  2)+"\t"+
-                        result.getString(3)+"\t"+
-                        result.getString(4));
+
+            ResultSet result1=stmt.executeQuery(query1);
+
+            boolean b=result1.next();
+            if(b==true){
+                logger.info("Print all details");
+                logger.info("EmpId\tEmpName\tAddress\tDepartment");
+                ResultSet result=stmt.executeQuery(query);
+                while(result.next()){
+                    logger.info(result.getInt(1)+"\t\t"
+                            +result.getString(  2)+"\t\t"+
+                            result.getString(3)+"\t\t"+
+                            result.getString(4));
+                }
+            }else{
+                logger.info("DataNot present in Database");
             }
+
         }catch (SQLException e) {
             logger.error("error is "+e);
         }

@@ -13,11 +13,15 @@ public class Delete {
         String query= "delete from emp where EmpId=?";
         try {
             PreparedStatement preparedStatement = DbCon.connection.prepareStatement(query);
-
             preparedStatement.setInt(1,id);
-            preparedStatement.executeUpdate();
+            int c=preparedStatement.executeUpdate();
 
-            logger.info("Data Deleted Successfully....!");
+            if(c!=0){
+                logger.info("Data Deleted Successfully....!");
+            }
+            else{
+                logger.info(id+" is not present in database");
+            }
 
         }catch (SQLException e) {
             logger.error("error is "+e);
